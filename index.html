@@ -6,307 +6,136 @@
 <title>Forex Starter Hub — Free Beginner's Pack</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#080c0a;--card:#111a14;--border:#1e2e22;--green:#00e562;--accent:#c8ff3e;--text:#e8f0ea;--muted:#6b8070}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:400;line-height:1.6;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,98,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,98,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.glow-blob{position:fixed;width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,98,0.07) 0%,transparent 70%);border-radius:50%;top:-100px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0}
 
-  :root {
-    --black: #080c0a;
-    --dark: #0d1410;
-    --card: #111a14;
-    --border: #1e2e22;
-    --green: #00e562;
-    --accent: #c8ff3e;
-    --text: #e8f0ea;
-    --muted: #6b8070;
-  }
+/* TICKER */
+.ticker-wrap{width:100%;background:var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:10px 0;position:relative;z-index:10}
+.ticker{display:flex;gap:60px;animation:ticker 25s linear infinite;width:max-content}
+.ticker span{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);white-space:nowrap;letter-spacing:.05em}
+.ticker span.up{color:var(--green)}.ticker span.down{color:#ff4d4d}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  html { scroll-behavior: smooth; }
+/* NAV */
+nav{position:relative;z-index:10;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.1em;color:var(--text)}.logo span{color:var(--green)}
+.nav-tag{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);background:rgba(0,229,98,.1);border:1px solid rgba(0,229,98,.2);padding:4px 10px;border-radius:2px;letter-spacing:.1em}
 
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+/* HERO */
+.hero{position:relative;z-index:5;max-width:720px;margin:0 auto;padding:80px 24px 60px;text-align:center}
+.hero-label{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--green);text-transform:uppercase;margin-bottom:28px;animation:fadeUp .5s ease both}
+.hero-label::before,.hero-label::after{content:'';display:block;width:30px;height:1px;background:var(--green);opacity:.5}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,10vw,88px);line-height:.95;letter-spacing:.02em;color:var(--text);margin-bottom:24px;animation:fadeUp .5s .1s ease both}
+h1 .highlight{color:var(--green);position:relative;display:inline-block}
+h1 .highlight::after{content:'';position:absolute;bottom:4px;left:0;width:100%;height:3px;background:var(--accent);opacity:.6}
+.hero-sub{font-size:17px;color:var(--muted);max-width:500px;margin:0 auto 48px;font-weight:300;line-height:1.7;animation:fadeUp .5s .2s ease both}
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,98,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,98,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+/* FORM CARD */
+.form-wrap{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:32px 32px 24px;max-width:520px;margin:0 auto;position:relative;animation:fadeUp .5s .3s ease both}
+.form-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--green),var(--accent),transparent);border-radius:4px 4px 0 0}
+.form-title{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;font-family:'DM Mono',monospace}
 
-  .glow-blob {
-    position: fixed;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,229,98,0.07) 0%, transparent 70%);
-    border-radius: 50%;
-    top: -100px; left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* BEEHIIV EMBED OVERRIDES — force dark theme */
+.beehiiv-embed-wrap{
+  position:relative;
+  width:100%;
+  border-radius:3px;
+  overflow:hidden;
+}
 
-  /* TICKER */
-  .ticker-wrap {
-    width: 100%;
-    background: var(--border);
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-    padding: 10px 0;
-    position: relative;
-    z-index: 10;
-  }
-  .ticker {
-    display: flex;
-    gap: 60px;
-    animation: ticker 25s linear infinite;
-    width: max-content;
-  }
-  .ticker span { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; letter-spacing: 0.05em; }
-  .ticker span.up { color: var(--green); }
-  .ticker span.down { color: #ff4d4d; }
-  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* Hide Beehiiv's own background/branding and force our colors */
+.beehiiv-embed-wrap iframe.beehiiv-embed{
+  width:100% !important;
+  max-width:100% !important;
+  height:220px !important;
+  border:none !important;
+  border-radius:3px !important;
+  background:transparent !important;
+  display:block;
+  color-scheme: dark;
+}
 
-  /* NAV */
-  nav {
-    position: relative; z-index: 10;
-    padding: 20px 40px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-  }
-  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em; color: var(--text); }
-  .logo span { color: var(--green); }
-  .nav-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green); background: rgba(0,229,98,0.1); border: 1px solid rgba(0,229,98,0.2); padding: 4px 10px; border-radius: 2px; letter-spacing: 0.1em; }
+/* Inject dark styles into the iframe via CSS filter trick */
+.beehiiv-embed-wrap{
+  filter: invert(0);
+}
 
-  /* HERO */
-  .hero { position: relative; z-index: 5; max-width: 720px; margin: 0 auto; padding: 80px 24px 60px; text-align: center; }
-  .hero-label { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--green); text-transform: uppercase; margin-bottom: 28px; animation: fadeUp 0.5s ease both; }
-  .hero-label::before, .hero-label::after { content: ''; display: block; width: 30px; height: 1px; background: var(--green); opacity: 0.5; }
+/* Note below form */
+.form-note{font-size:11px;color:var(--muted);margin-top:14px;font-family:'DM Mono',monospace;letter-spacing:.03em;text-align:center}
 
-  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 10vw, 88px); line-height: 0.95; letter-spacing: 0.02em; color: var(--text); margin-bottom: 24px; animation: fadeUp 0.5s 0.1s ease both; }
-  h1 .highlight { color: var(--green); position: relative; display: inline-block; }
-  h1 .highlight::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 100%; height: 3px; background: var(--accent); opacity: 0.6; }
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:0 24px;position:relative;z-index:5}
 
-  .hero-sub { font-size: 17px; color: var(--muted); max-width: 500px; margin: 0 auto 48px; font-weight: 300; line-height: 1.7; animation: fadeUp 0.5s 0.2s ease both; }
+/* PROOF */
+.proof-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding:48px 24px;position:relative;z-index:5}
+.proof-item{text-align:center}
+.proof-number{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--green);letter-spacing:.05em;line-height:1;margin-bottom:4px}
+.proof-label{font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
 
-  /* FORM */
-  .form-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 32px; max-width: 480px; margin: 0 auto; position: relative; animation: fadeUp 0.5s 0.3s ease both; }
-  .form-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--green), var(--accent), transparent); }
-  .form-title { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; font-family: 'DM Mono', monospace; }
-  .input-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+/* SECTION */
+.section{position:relative;z-index:5;max-width:720px;margin:0 auto;padding:60px 24px}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--green);text-transform:uppercase;margin-bottom:16px}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,6vw,52px);letter-spacing:.04em;margin-bottom:40px;line-height:1}
+.items-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:580px){.items-grid{grid-template-columns:1fr}}
+.item-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:24px;position:relative;transition:border-color .2s,transform .2s}
+.item-card:hover{border-color:rgba(0,229,98,.3);transform:translateY(-2px)}
+.item-icon{font-size:28px;margin-bottom:12px;display:block}
+.item-title{font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px}
+.item-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.item-tag{position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:10px;color:var(--green);background:rgba(0,229,98,.1);border:1px solid rgba(0,229,98,.15);padding:2px 8px;border-radius:2px;letter-spacing:.08em}
 
-  input[type="text"], input[type="email"] {
-    width: 100%; background: var(--black); border: 1px solid var(--border); border-radius: 3px;
-    padding: 14px 16px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s;
-  }
-  input::placeholder { color: var(--muted); }
-  input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(0,229,98,0.08); }
+/* STEPS */
+.steps{position:relative;z-index:5;max-width:720px;margin:0 auto;padding:0 24px 60px}
+.step{display:flex;gap:20px;padding:24px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.step:last-child{border-bottom:none}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--border);line-height:1;min-width:36px;transition:color .2s}
+.step:hover .step-num{color:var(--green)}
+.step-title{font-weight:600;font-size:16px;margin-bottom:4px;color:var(--text)}
+.step-desc{font-size:14px;color:var(--muted);line-height:1.6}
 
-  .cta-btn {
-    width: 100%; background: var(--green); color: var(--black); border: none; border-radius: 3px;
-    padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.1em;
-    cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
-  }
-  .cta-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%); transform: translateX(-100%); transition: transform 0.4s; }
-  .cta-btn:hover { background: var(--accent); transform: translateY(-1px); }
-  .cta-btn:hover::after { transform: translateX(100%); }
-  .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+/* FINAL CTA */
+.final-cta{position:relative;z-index:5;text-align:center;padding:80px 24px;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.final-cta h2{margin-bottom:12px}
+.final-cta p{color:var(--muted);font-size:15px;margin-bottom:36px}
+.final-btn{display:inline-block;background:var(--green);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.1em;padding:18px 52px;border-radius:3px;text-decoration:none;transition:all .2s;border:none;cursor:pointer}
+.final-btn:hover{background:var(--accent);transform:translateY(-2px)}
 
-  .form-note { font-size: 11px; color: var(--muted); margin-top: 12px; font-family: 'DM Mono', monospace; letter-spacing: 0.03em; }
-  .form-error { display: none; color: #ff6b6b; font-size: 12px; font-family: 'DM Mono', monospace; text-align: left; margin-top: -4px; }
+/* FOOTER */
+footer{position:relative;z-index:5;text-align:center;padding:32px 24px}
+footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.05em}
 
-  /* DIVIDER */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 0 24px; position: relative; z-index: 5; }
-
-  /* PROOF */
-  .proof-row { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; padding: 48px 24px; position: relative; z-index: 5; }
-  .proof-item { text-align: center; }
-  .proof-number { font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: var(--green); letter-spacing: 0.05em; line-height: 1; margin-bottom: 4px; }
-  .proof-label { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
-
-  /* SECTION */
-  .section { position: relative; z-index: 5; max-width: 720px; margin: 0 auto; padding: 60px 24px; }
-  .section-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--green); text-transform: uppercase; margin-bottom: 16px; }
-  h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 6vw, 52px); letter-spacing: 0.04em; margin-bottom: 40px; line-height: 1; }
-
-  .items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 580px) { .items-grid { grid-template-columns: 1fr; } }
-
-  .item-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 24px; position: relative; transition: border-color 0.2s, transform 0.2s; }
-  .item-card:hover { border-color: rgba(0,229,98,0.3); transform: translateY(-2px); }
-  .item-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-  .item-title { font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 6px; }
-  .item-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
-  .item-tag { position: absolute; top: 16px; right: 16px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green); background: rgba(0,229,98,0.1); border: 1px solid rgba(0,229,98,0.15); padding: 2px 8px; border-radius: 2px; letter-spacing: 0.08em; }
-
-  /* STEPS */
-  .steps { position: relative; z-index: 5; max-width: 720px; margin: 0 auto; padding: 0 24px 60px; }
-  .step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
-  .step:last-child { border-bottom: none; }
-  .step-num { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--border); line-height: 1; min-width: 36px; transition: color 0.2s; }
-  .step:hover .step-num { color: var(--green); }
-  .step-title { font-weight: 600; font-size: 16px; margin-bottom: 4px; color: var(--text); }
-  .step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-  /* FINAL CTA */
-  .final-cta { position: relative; z-index: 5; text-align: center; padding: 80px 24px; background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .final-cta h2 { margin-bottom: 12px; }
-  .final-cta p { color: var(--muted); font-size: 15px; margin-bottom: 36px; }
-  .final-btn { display: inline-block; background: var(--green); color: var(--black); font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.1em; padding: 18px 52px; border-radius: 3px; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
-  .final-btn:hover { background: var(--accent); transform: translateY(-2px); }
-
-  /* FOOTER */
-  footer { position: relative; z-index: 5; text-align: center; padding: 32px 24px; }
-  footer p { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
-
-  /* POPUP */
-  .popup-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(8,12,10,0.93);
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-  }
-  .popup-overlay.active { display: flex; }
-
-  .popup-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 48px 40px;
-    max-width: 440px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  }
-
-  .popup-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, transparent, var(--green), var(--accent), transparent);
-    border-radius: 6px 6px 0 0;
-  }
-
-  .popup-icon { font-size: 60px; margin-bottom: 20px; line-height: 1; display: block; }
-
-  .popup-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 42px; color: var(--green);
-    letter-spacing: 0.06em; margin-bottom: 12px; line-height: 1;
-  }
-
-  .popup-message { font-size: 16px; color: var(--text); line-height: 1.8; margin-bottom: 8px; }
-
-  .popup-spam {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px; color: var(--muted); margin-bottom: 28px;
-  }
-
-  .popup-checklist {
-    background: rgba(0,229,98,0.05);
-    border: 1px solid rgba(0,229,98,0.12);
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 28px;
-    text-align: left;
-  }
-
-  .popup-checklist-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; color: var(--green);
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  .popup-checklist-item {
-    font-size: 13px; color: var(--muted);
-    line-height: 1; padding: 7px 0;
-    border-bottom: 1px solid rgba(30,46,34,0.6);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .popup-checklist-item:last-child { border-bottom: none; padding-bottom: 0; }
-
-  .popup-close-btn {
-    width: 100%;
-    background: var(--green); color: var(--black);
-    border: none; border-radius: 3px; padding: 15px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px; letter-spacing: 0.1em;
-    cursor: pointer; transition: background 0.2s;
-  }
-  .popup-close-btn:hover { background: var(--accent); }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes popIn { from { opacity: 0; transform: scale(0.82) translateY(24px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-  .hero-label { animation: fadeUp 0.5s ease both; }
-  h1 { animation: fadeUp 0.5s 0.1s ease both; }
-  .hero-sub { animation: fadeUp 0.5s 0.2s ease both; }
-  .form-wrap { animation: fadeUp 0.5s 0.3s ease both; }
-
-  @media (max-width: 480px) {
-    nav { padding: 16px 20px; }
-    .hero { padding: 48px 20px 40px; }
-    .form-wrap { padding: 24px 20px; }
-    .proof-row { gap: 28px; }
-    .popup-card { padding: 36px 24px; }
-    .popup-title { font-size: 36px; }
-  }
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){nav{padding:16px 20px}.hero{padding:48px 20px 40px}.form-wrap{padding:24px 20px}.proof-row{gap:28px}}
 </style>
 </head>
 <body>
-
 <div class="glow-blob"></div>
 
-<!-- SUCCESS POPUP -->
-<div class="popup-overlay" id="popup-overlay">
-  <div class="popup-card">
-    <span class="popup-icon">✅</span>
-    <div class="popup-title">YOU'RE IN!</div>
-    <p class="popup-message">Your free starter pack is<br>on its way to your inbox.</p>
-    <p class="popup-spam">📬 Don't see it? Check your spam folder.</p>
-    <div class="popup-checklist">
-      <div class="popup-checklist-title">What's heading your way</div>
-      <div class="popup-checklist-item"><span>📘</span> Forex Trading for Beginners — free book</div>
-      <div class="popup-checklist-item"><span>✅</span> Your 7-Day Quick-Start Checklist</div>
-      <div class="popup-checklist-item"><span>📊</span> Top 5 Candlestick Patterns Cheat Sheet</div>
-    </div>
-    <button class="popup-close-btn" id="popup-close-btn">GOT IT — CLOSE THIS</button>
-  </div>
-</div>
-
 <!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>EUR/USD <span class="up">▲ 1.0842</span></span>
-    <span>GBP/USD <span class="up">▲ 1.2714</span></span>
-    <span>USD/JPY <span class="down">▼ 149.32</span></span>
-    <span>AUD/USD <span class="up">▲ 0.6531</span></span>
-    <span>USD/CHF <span class="down">▼ 0.9012</span></span>
-    <span>USD/CAD <span class="up">▲ 1.3621</span></span>
-    <span>NZD/USD <span class="down">▼ 0.6012</span></span>
-    <span>EUR/GBP <span class="up">▲ 0.8531</span></span>
-    <span>EUR/USD <span class="up">▲ 1.0842</span></span>
-    <span>GBP/USD <span class="up">▲ 1.2714</span></span>
-    <span>USD/JPY <span class="down">▼ 149.32</span></span>
-    <span>AUD/USD <span class="up">▲ 0.6531</span></span>
-    <span>USD/CHF <span class="down">▼ 0.9012</span></span>
-    <span>USD/CAD <span class="up">▲ 1.3621</span></span>
-    <span>NZD/USD <span class="down">▼ 0.6012</span></span>
-    <span>EUR/GBP <span class="up">▲ 0.8531</span></span>
-  </div>
-</div>
+<div class="ticker-wrap"><div class="ticker">
+<span>EUR/USD <span class="up">▲ 1.0842</span></span>
+<span>GBP/USD <span class="up">▲ 1.2714</span></span>
+<span>USD/JPY <span class="down">▼ 149.32</span></span>
+<span>AUD/USD <span class="up">▲ 0.6531</span></span>
+<span>USD/CHF <span class="down">▼ 0.9012</span></span>
+<span>USD/CAD <span class="up">▲ 1.3621</span></span>
+<span>NZD/USD <span class="down">▼ 0.6012</span></span>
+<span>EUR/GBP <span class="up">▲ 0.8531</span></span>
+<span>EUR/USD <span class="up">▲ 1.0842</span></span>
+<span>GBP/USD <span class="up">▲ 1.2714</span></span>
+<span>USD/JPY <span class="down">▼ 149.32</span></span>
+<span>AUD/USD <span class="up">▲ 0.6531</span></span>
+<span>USD/CHF <span class="down">▼ 0.9012</span></span>
+<span>USD/CAD <span class="up">▲ 1.3621</span></span>
+<span>NZD/USD <span class="down">▼ 0.6012</span></span>
+<span>EUR/GBP <span class="up">▲ 0.8531</span></span>
+</div></div>
 
 <!-- NAV -->
 <nav>
@@ -320,18 +149,21 @@
   <h1>START FOREX<br>THE <span class="highlight">RIGHT WAY</span></h1>
   <p class="hero-sub">Get the free beginner's trading book, a 7-day checklist, and a candlestick cheat sheet — everything you need to understand forex before your first trade.</p>
 
-  <!-- FORM -->
+  <!-- FORM CARD with native Beehiiv embed inside -->
   <div class="form-wrap">
     <div class="form-title">→ Get Your Free Starter Pack</div>
-    <form id="signup-form" novalidate>
-      <div class="input-group">
-        <input type="text" id="fname" placeholder="First name" autocomplete="given-name" />
-        <input type="email" id="femail" placeholder="Email address" autocomplete="email" />
-        <div class="form-error" id="form-error"></div>
-      </div>
-      <button type="submit" class="cta-btn" id="submit-btn">SEND ME THE FREE PACK</button>
-      <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
-    </form>
+    <div class="beehiiv-embed-wrap">
+      <script async src="https://subscribe-forms.beehiiv.com/embed.js"></script>
+      <iframe
+        src="https://subscribe-forms.beehiiv.com/2dd301c6-58f8-421e-a83f-7cc936b40dac"
+        class="beehiiv-embed"
+        data-test-id="beehiiv-embed"
+        frameborder="0"
+        scrolling="no"
+        style="width:100%;max-width:100%;height:220px;margin:0;border-radius:3px;background-color:transparent;box-shadow:none;border:none;"
+      ></iframe>
+    </div>
+    <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
   </div>
 </section>
 
@@ -339,22 +171,10 @@
 
 <!-- SOCIAL PROOF -->
 <div class="proof-row">
-  <div class="proof-item">
-    <div class="proof-number">100K+</div>
-    <div class="proof-label">Active Traders</div>
-  </div>
-  <div class="proof-item">
-    <div class="proof-number">FREE</div>
-    <div class="proof-label">Always</div>
-  </div>
-  <div class="proof-item">
-    <div class="proof-number">3</div>
-    <div class="proof-label">Resources Inside</div>
-  </div>
-  <div class="proof-item">
-    <div class="proof-number">7</div>
-    <div class="proof-label">Day Kickstart</div>
-  </div>
+  <div class="proof-item"><div class="proof-number">100K+</div><div class="proof-label">Active Traders</div></div>
+  <div class="proof-item"><div class="proof-number">FREE</div><div class="proof-label">Always</div></div>
+  <div class="proof-item"><div class="proof-number">3</div><div class="proof-label">Resources Inside</div></div>
+  <div class="proof-item"><div class="proof-number">7</div><div class="proof-label">Day Kickstart</div></div>
 </div>
 
 <hr class="divider">
@@ -365,26 +185,22 @@
   <h2>YOUR COMPLETE<br>STARTER PACK</h2>
   <div class="items-grid">
     <div class="item-card">
-      <span class="item-icon">📘</span>
-      <div class="item-tag">FREE BOOK</div>
+      <span class="item-icon">📘</span><div class="item-tag">FREE BOOK</div>
       <div class="item-title">Forex Trading for Beginners</div>
       <div class="item-desc">The most downloaded free forex eBook. Covers everything from pips to chart reading to your first trade.</div>
     </div>
     <div class="item-card">
-      <span class="item-icon">✅</span>
-      <div class="item-tag">CHECKLIST</div>
+      <span class="item-icon">✅</span><div class="item-tag">CHECKLIST</div>
       <div class="item-title">7-Day Quick-Start Checklist</div>
       <div class="item-desc">Exactly what to do each day in your first week. No guessing, no overwhelm — just a clear path forward.</div>
     </div>
     <div class="item-card">
-      <span class="item-icon">📊</span>
-      <div class="item-tag">CHEAT SHEET</div>
+      <span class="item-icon">📊</span><div class="item-tag">CHEAT SHEET</div>
       <div class="item-title">Top 5 Candlestick Patterns</div>
       <div class="item-desc">The 5 chart patterns every beginner needs to know before reading a live chart. Save it, reference it daily.</div>
     </div>
     <div class="item-card">
-      <span class="item-icon">💡</span>
-      <div class="item-tag">TIPS</div>
+      <span class="item-icon">💡</span><div class="item-tag">TIPS</div>
       <div class="item-title">Weekly Forex Tips</div>
       <div class="item-desc">Practical, beginner-focused tips delivered to your inbox. No noise, no hype — just what actually matters.</div>
     </div>
@@ -426,111 +242,13 @@
   <div class="section-label" style="margin-bottom:16px">Ready to Start?</div>
   <h2>GET THE FREE PACK<br>RIGHT NOW</h2>
   <p>No experience needed. No cost. Just scroll up and enter your email.</p>
-  <button class="final-btn" id="final-btn">↑ GET MY FREE STARTER PACK</button>
+  <button class="final-btn" onclick="window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){document.querySelector('.beehiiv-embed').focus()},700)">↑ GET MY FREE STARTER PACK</button>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <p>© 2026 Forex Starter Hub · Free resources for beginner traders · Not financial advice</p>
 </footer>
-
-<script>
-  const overlay = document.getElementById('popup-overlay');
-  const closeBtn = document.getElementById('popup-close-btn');
-  const form = document.getElementById('signup-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const errorEl = document.getElementById('form-error');
-
-  // Show popup
-  function showPopup() {
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  // Hide popup
-  function hidePopup() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  // Close on button click
-  closeBtn.addEventListener('click', hidePopup);
-
-  // Close on background click
-  overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) hidePopup();
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') hidePopup();
-  });
-
-  // Form submission
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const name = document.getElementById('fname').value.trim();
-    const email = document.getElementById('femail').value.trim();
-
-    // Reset error
-    errorEl.style.display = 'none';
-    errorEl.textContent = '';
-
-    // Validate name
-    if (!name) {
-      errorEl.textContent = '→ Please enter your first name.';
-      errorEl.style.display = 'block';
-      document.getElementById('fname').focus();
-      return;
-    }
-
-    // Validate email
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errorEl.textContent = '→ Please enter a valid email address.';
-      errorEl.style.display = 'block';
-      document.getElementById('femail').focus();
-      return;
-    }
-
-    // Loading state
-    submitBtn.textContent = 'SENDING...';
-    submitBtn.disabled = true;
-
-    // Show success popup immediately — great UX
-    setTimeout(() => {
-      showPopup();
-      submitBtn.textContent = 'SEND ME THE FREE PACK';
-      submitBtn.disabled = false;
-      document.getElementById('fname').value = '';
-      document.getElementById('femail').value = '';
-    }, 600);
-
-    // Submit to Beehiiv silently in background
-    const beehiivURL = 'https://forexstarterhub.beehiiv.com/subscribe';
-    const params = new URLSearchParams({
-      email: email,
-      first_name: name,
-      utm_source: 'landing_page',
-      utm_medium: 'organic'
-    });
-
-    fetch(beehiivURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString(),
-      mode: 'no-cors'
-    }).catch(() => {
-      // Silent — popup already shown, user experience is fine
-    });
-  });
-
-  // Bottom CTA scrolls up and focuses first field
-  document.getElementById('final-btn').addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => document.getElementById('fname').focus(), 700);
-  });
-</script>
 
 </body>
 </html>
