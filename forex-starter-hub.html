@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forex Starter Hub — Free Beginner's Pack</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080c0a;
+    --dark: #0d1410;
+    --card: #111a14;
+    --border: #1e2e22;
+    --green: #00e562;
+    --green-dim: #00b04a;
+    --green-glow: rgba(0,229,98,0.15);
+    --text: #e8f0ea;
+    --muted: #6b8070;
+    --accent: #c8ff3e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* GRID TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,98,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,98,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* GLOW BLOB */
+  .glow-blob {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,98,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* TICKER */
+  .ticker-wrap {
+    width: 100%;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    padding: 10px 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .ticker {
+    display: flex;
+    gap: 60px;
+    animation: ticker 25s linear infinite;
+    width: max-content;
+  }
+
+  .ticker span {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .ticker span.up { color: var(--green); }
+  .ticker span.down { color: #ff4d4d; }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* NAV */
+  nav {
+    position: relative;
+    z-index: 10;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+
+  .logo span { color: var(--green); }
+
+  .nav-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    background: rgba(0,229,98,0.1);
+    border: 1px solid rgba(0,229,98,0.2);
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    z-index: 5;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 60px;
+    text-align: center;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-label::before, .hero-label::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--green);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  h1 .highlight {
+    color: var(--green);
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* FORM */
+  .form-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .form-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), var(--accent), transparent);
+  }
+
+  .form-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 14px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input::placeholder { color: var(--muted); }
+
+  input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0,229,98,0.08);
+  }
+
+  .cta-btn {
+    width: 100%;
+    background: var(--green);
+    color: var(--black);
+    border: none;
+    border-radius: 3px;
+    padding: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+    transform: translateX(-100%);
+    transition: transform 0.4s;
+  }
+
+  .cta-btn:hover { background: var(--accent); transform: translateY(-1px); }
+  .cta-btn:hover::after { transform: translateX(100%); }
+
+  .form-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  /* WHAT YOU GET */
+  .section {
+    position: relative;
+    z-index: 5;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 6vw, 52px);
+    letter-spacing: 0.04em;
+    margin-bottom: 40px;
+    line-height: 1;
+  }
+
+  .items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 580px) {
+    .items-grid { grid-template-columns: 1fr; }
+  }
+
+  .item-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .item-card:hover {
+    border-color: rgba(0,229,98,0.3);
+    transform: translateY(-2px);
+  }
+
+  .item-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .item-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .item-tag {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    background: rgba(0,229,98,0.1);
+    border: 1px solid rgba(0,229,98,0.15);
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 24px;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* SOCIAL PROOF */
+  .proof-row {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    padding: 48px 24px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .proof-item {
+    text-align: center;
+  }
+
+  .proof-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .proof-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* WHAT INSIDE */
+  .steps {
+    position: relative;
+    z-index: 5;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--border);
+    line-height: 1;
+    min-width: 36px;
+    transition: color 0.2s;
+  }
+
+  .step:hover .step-num { color: var(--green); }
+
+  .step-content {}
+
+  .step-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 80px 24px;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .final-cta h2 { margin-bottom: 12px; }
+
+  .final-cta p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 36px;
+  }
+
+  .final-btn {
+    display: inline-block;
+    background: var(--green);
+    color: var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    padding: 18px 52px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .final-btn:hover { background: var(--accent); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label { animation: fadeUp 0.5s ease both; }
+  h1 { animation: fadeUp 0.5s 0.1s ease both; }
+  .hero-sub { animation: fadeUp 0.5s 0.2s ease both; }
+  .form-wrap { animation: fadeUp 0.5s 0.3s ease both; }
+
+  /* MOBILE */
+  @media (max-width: 480px) {
+    nav { padding: 16px 20px; }
+    .hero { padding: 48px 20px 40px; }
+    .form-wrap { padding: 24px 20px; }
+    .proof-row { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow-blob"></div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>EUR/USD <span class="up">▲ 1.0842</span></span>
+    <span>GBP/USD <span class="up">▲ 1.2714</span></span>
+    <span>USD/JPY <span class="down">▼ 149.32</span></span>
+    <span>AUD/USD <span class="up">▲ 0.6531</span></span>
+    <span>USD/CHF <span class="down">▼ 0.9012</span></span>
+    <span>USD/CAD <span class="up">▲ 1.3621</span></span>
+    <span>NZD/USD <span class="down">▼ 0.6012</span></span>
+    <span>EUR/GBP <span class="up">▲ 0.8531</span></span>
+    <!-- duplicate for seamless loop -->
+    <span>EUR/USD <span class="up">▲ 1.0842</span></span>
+    <span>GBP/USD <span class="up">▲ 1.2714</span></span>
+    <span>USD/JPY <span class="down">▼ 149.32</span></span>
+    <span>AUD/USD <span class="up">▲ 0.6531</span></span>
+    <span>USD/CHF <span class="down">▼ 0.9012</span></span>
+    <span>USD/CAD <span class="up">▲ 1.3621</span></span>
+    <span>NZD/USD <span class="down">▼ 0.6012</span></span>
+    <span>EUR/GBP <span class="up">▲ 0.8531</span></span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">FOREX<span>STARTER</span>HUB</div>
+  <div class="nav-tag">FREE RESOURCES</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">100% Free · No Experience Needed</div>
+
+  <h1>START FOREX<br>THE <span class="highlight">RIGHT WAY</span></h1>
+
+  <p class="hero-sub">
+    Get the free beginner's trading book, a 7-day checklist, and a candlestick cheat sheet — everything you need to understand forex before your first trade.
+  </p>
+
+  <!-- FORM -->
+  <div class="form-wrap">
+    <div class="form-title">→ Get Your Free Starter Pack</div>
+    <div class="input-group">
+      <input type="text" placeholder="First name" />
+      <input type="email" placeholder="Email address" />
+    </div>
+    <button class="cta-btn">SEND ME THE FREE PACK</button>
+    <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SOCIAL PROOF -->
+<div class="proof-row">
+  <div class="proof-item">
+    <div class="proof-number">100K+</div>
+    <div class="proof-label">Active Traders</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-number">FREE</div>
+    <div class="proof-label">Always</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-number">3</div>
+    <div class="proof-label">Resources Inside</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-number">7</div>
+    <div class="proof-label">Day Kickstart</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- WHAT YOU GET -->
+<section class="section">
+  <div class="section-label">What's Inside</div>
+  <h2>YOUR COMPLETE<br>STARTER PACK</h2>
+
+  <div class="items-grid">
+    <div class="item-card">
+      <span class="item-icon">📘</span>
+      <div class="item-tag">FREE BOOK</div>
+      <div class="item-title">Forex Trading for Beginners</div>
+      <div class="item-desc">The most downloaded free forex eBook. Covers everything from pips to chart reading to your first trade.</div>
+    </div>
+
+    <div class="item-card">
+      <span class="item-icon">✅</span>
+      <div class="item-tag">CHECKLIST</div>
+      <div class="item-title">7-Day Quick-Start Checklist</div>
+      <div class="item-desc">Exactly what to do each day in your first week. No guessing, no overwhelm — just a clear path forward.</div>
+    </div>
+
+    <div class="item-card">
+      <span class="item-icon">📊</span>
+      <div class="item-tag">CHEAT SHEET</div>
+      <div class="item-title">Top 5 Candlestick Patterns</div>
+      <div class="item-desc">The 5 chart patterns every beginner needs to know before reading a live chart. Save it, reference it daily.</div>
+    </div>
+
+    <div class="item-card">
+      <span class="item-icon">💡</span>
+      <div class="item-tag">TIPS</div>
+      <div class="item-title">Weekly Forex Tips</div>
+      <div class="item-desc">Practical, beginner-focused tips delivered to your inbox. No noise, no hype — just what actually matters.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- HOW IT WORKS -->
+<div class="steps">
+  <div class="section-label" style="padding-top:60px">How It Works</div>
+  <h2 style="margin-bottom:8px">THREE STEPS.<br>ZERO COST.</h2>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:32px">That's all it takes to get started.</p>
+
+  <div class="step">
+    <div class="step-num">01</div>
+    <div class="step-content">
+      <div class="step-title">Enter your email above</div>
+      <div class="step-desc">Takes 10 seconds. No credit card, no signup fees. Just your name and email.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">02</div>
+    <div class="step-content">
+      <div class="step-title">Get your starter pack instantly</div>
+      <div class="step-desc">The book, checklist, and cheat sheet are delivered straight to your inbox within minutes.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">03</div>
+    <div class="step-content">
+      <div class="step-title">Follow the 7-day plan</div>
+      <div class="step-desc">Use the checklist to build your foundation day by day. By the end of week one, you'll understand forex better than most beginners do after months.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <div class="section-label" style="margin-bottom:16px">Ready to Start?</div>
+  <h2>GET THE FREE PACK<br>RIGHT NOW</h2>
+  <p>No experience needed. No cost. Just scroll up and enter your email.</p>
+  <button class="final-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ GET MY FREE STARTER PACK</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Forex Starter Hub · Free resources for beginner traders · Not financial advice</p>
+</footer>
+
+</body>
+</html>
