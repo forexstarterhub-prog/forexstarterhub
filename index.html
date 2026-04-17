@@ -567,16 +567,86 @@
   </p>
 
   <!-- FORM -->
-  <div class="form-wrap">
+  <div class="form-wrap" id="signup-form-wrap">
     <div class="form-title">→ Get Your Free Starter Pack</div>
-    <div class="input-group">
-      <input type="text" placeholder="First name" />
-      <input type="email" placeholder="Email address" />
+    <form id="signup-form" novalidate>
+      <div class="input-group">
+        <input type="text" id="fname" placeholder="First name" autocomplete="given-name" />
+        <input type="email" id="femail" placeholder="Email address" autocomplete="email" />
+        <div id="form-error" style="display:none;color:#ff6b6b;font-size:12px;font-family:'DM Mono',monospace;text-align:left;margin-top:-4px;"></div>
+      </div>
+      <button type="submit" class="cta-btn" id="submit-btn">SEND ME THE FREE PACK</button>
+      <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
+    </form>
+
+    <!-- SUCCESS STATE -->
+    <div id="success-state" style="display:none;text-align:center;padding:12px 0;">
+      <div style="font-size:40px;margin-bottom:16px;">✅</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green);letter-spacing:0.05em;margin-bottom:8px;">YOU'RE IN!</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;">Check your inbox — your free starter pack<br>is on its way. Check spam if you don't see it.</div>
     </div>
-    <button class="cta-btn">SEND ME THE FREE PACK</button>
-    <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
   </div>
 </section>
+
+<script>
+document.getElementById('signup-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const errorEl = document.getElementById('form-error');
+  const btn = document.getElementById('submit-btn');
+
+  // Validation
+  errorEl.style.display = 'none';
+  if (!name) {
+    errorEl.textContent = '→ Please enter your first name.';
+    errorEl.style.display = 'block';
+    document.getElementById('fname').focus();
+    return;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errorEl.textContent = '→ Please enter a valid email address.';
+    errorEl.style.display = 'block';
+    document.getElementById('femail').focus();
+    return;
+  }
+
+  // Loading state
+  btn.textContent = 'SENDING...';
+  btn.style.opacity = '0.7';
+  btn.disabled = true;
+
+  // Submit to Beehiiv
+  const beehiivURL = 'https://forexstarterhub.beehiiv.com/subscribe';
+  const params = new URLSearchParams({
+    email: email,
+    first_name: name,
+    utm_source: 'landing_page',
+    utm_medium: 'organic'
+  });
+
+  fetch(beehiivURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString(),
+    mode: 'no-cors'
+  }).then(() => {
+    // Show success (no-cors means we always show success after submit)
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  }).catch(() => {
+    // Fallback: redirect to Beehiiv page directly
+    window.location.href = beehiivURL + '?email=' + encodeURIComponent(email) + '&first_name=' + encodeURIComponent(name);
+  });
+});
+
+// Also wire up the bottom CTA button
+document.querySelector('.final-btn').addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => document.getElementById('fname').focus(), 600);
+});
+</script>
 
 <hr class="divider">
 
