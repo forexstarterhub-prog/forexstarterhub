@@ -118,36 +118,17 @@ footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);lette
   <p class="hero-sub">Get the free beginner's trading book, a 7-day checklist, and a candlestick cheat sheet — everything you need to understand forex before your first trade.</p>
 
   <div class="form-wrap">
-
-    <!-- FORM VIEW -->
     <div id="form-view">
       <div class="form-title">→ Get Your Free Starter Pack</div>
-
-      <!-- netlify attribute tells Netlify to detect and handle this form -->
-      <form
-        name="signup"
-        method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        id="signup-form"
-        onsubmit="handleSubmit(event)"
-      >
-        <!-- Honeypot anti-spam field — hidden from users -->
-        <p style="display:none"><input name="bot-field" /></p>
-        <!-- Required hidden field for Netlify -->
-        <input type="hidden" name="form-name" value="signup" />
-
-        <div class="input-group">
-          <input type="text"  name="first_name" id="fname"  placeholder="First name"    autocomplete="given-name" />
-          <input type="email" name="email"       id="femail" placeholder="Email address" autocomplete="email" />
-          <div class="form-error" id="form-error"></div>
-        </div>
-        <button type="submit" class="cta-btn" id="submit-btn">SEND ME THE FREE PACK</button>
-        <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
-      </form>
+      <div class="input-group">
+        <input type="text"  id="fname"  placeholder="First name"    autocomplete="given-name" />
+        <input type="email" id="femail" placeholder="Email address" autocomplete="email" />
+        <div class="form-error" id="form-error"></div>
+      </div>
+      <button class="cta-btn" id="submit-btn" onclick="handleSubmit()">SEND ME THE FREE PACK</button>
+      <p class="form-note">No spam. Unsubscribe anytime. Free forever.</p>
     </div>
 
-    <!-- SUCCESS VIEW -->
     <div class="success-state" id="success-view">
       <span class="success-icon">✅</span>
       <div class="success-title">YOU'RE IN!</div>
@@ -160,13 +141,11 @@ footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);lette
         <div class="success-list-item"><span>📊</span> Top 5 Candlestick Patterns Cheat Sheet</div>
       </div>
     </div>
-
   </div>
 </section>
 
 <hr class="divider">
 
-<!-- SOCIAL PROOF -->
 <div class="proof-row">
   <div class="proof-item"><div class="proof-number">100K+</div><div class="proof-label">Active Traders</div></div>
   <div class="proof-item"><div class="proof-number">FREE</div><div class="proof-label">Always</div></div>
@@ -176,7 +155,6 @@ footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);lette
 
 <hr class="divider">
 
-<!-- WHAT YOU GET -->
 <section class="section">
   <div class="section-label">What's Inside</div>
   <h2>YOUR COMPLETE<br>STARTER PACK</h2>
@@ -206,7 +184,6 @@ footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);lette
 
 <hr class="divider">
 
-<!-- HOW IT WORKS -->
 <div class="steps">
   <div class="section-label" style="padding-top:60px">How It Works</div>
   <h2 style="margin-bottom:8px">THREE STEPS.<br>ZERO COST.</h2>
@@ -229,12 +206,11 @@ footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);lette
     <div class="step-num">03</div>
     <div class="step-content">
       <div class="step-title">Follow the 7-day plan</div>
-      <div class="step-desc">Use the checklist to build your foundation day by day. By the end of week one, you'll understand forex better than most beginners do after months.</div>
+      <div class="step-desc">Use the checklist to build your foundation day by day. By the end of week one you'll understand forex better than most beginners do after months.</div>
     </div>
   </div>
 </div>
 
-<!-- FINAL CTA -->
 <div class="final-cta">
   <div class="section-label" style="margin-bottom:16px">Ready to Start?</div>
   <h2>GET THE FREE PACK<br>RIGHT NOW</h2>
@@ -242,72 +218,64 @@ footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);lette
   <button class="final-btn" onclick="window.scrollTo({top:0,behavior:'smooth'});setTimeout(function(){document.getElementById('fname').focus()},700)">↑ GET MY FREE STARTER PACK</button>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <p>© 2026 Forex Starter Hub · Free resources for beginner traders · Not financial advice</p>
 </footer>
 
 <script>
-function handleSubmit(e) {
-  e.preventDefault();
-
+function handleSubmit() {
   var name    = document.getElementById('fname').value.trim();
   var email   = document.getElementById('femail').value.trim();
   var errorEl = document.getElementById('form-error');
   var btn     = document.getElementById('submit-btn');
-  var form    = document.getElementById('signup-form');
 
-  // Reset error
   errorEl.style.display = 'none';
-  errorEl.textContent = '';
+  errorEl.textContent   = '';
 
-  // Validate
   if (!name) {
-    errorEl.textContent = '→ Please enter your first name.';
+    errorEl.textContent   = '→ Please enter your first name.';
     errorEl.style.display = 'block';
     document.getElementById('fname').focus();
     return;
   }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errorEl.textContent = '→ Please enter a valid email address.';
+    errorEl.textContent   = '→ Please enter a valid email address.';
     errorEl.style.display = 'block';
     document.getElementById('femail').focus();
     return;
   }
 
-  // Loading
   btn.textContent = 'SENDING...';
-  btn.disabled = true;
+  btn.disabled    = true;
 
-  // Submit to Netlify via fetch (keeps user on page)
-  var formData = new FormData(form);
+  var body = 'first_name=' + encodeURIComponent(name) +
+             '&email='      + encodeURIComponent(email);
 
-  fetch('/', {
-    method: 'POST',
+  fetch('/.netlify/functions/subscribe', {
+    method:  'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(formData).toString()
+    body:    body
   })
-  .then(function() {
-    // Show success
-    document.getElementById('form-view').style.display = 'none';
-    document.getElementById('success-view').style.display = 'block';
+  .then(function(res) {
+    if (res.ok) {
+      document.getElementById('form-view').style.display    = 'none';
+      document.getElementById('success-view').style.display = 'block';
+    } else {
+      throw new Error('Server error');
+    }
   })
   .catch(function() {
     btn.textContent = 'SEND ME THE FREE PACK';
-    btn.disabled = false;
-    errorEl.textContent = '→ Something went wrong. Please try again.';
+    btn.disabled    = false;
+    errorEl.textContent   = '→ Something went wrong. Please try again.';
     errorEl.style.display = 'block';
   });
 }
 
-// Enter key support
 document.addEventListener('DOMContentLoaded', function() {
   ['fname','femail'].forEach(function(id) {
     document.getElementById(id).addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        document.getElementById('signup-form').dispatchEvent(new Event('submit'));
-      }
+      if (e.key === 'Enter') { e.preventDefault(); handleSubmit(); }
     });
   });
 });
